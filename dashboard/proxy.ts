@@ -1,3 +1,7 @@
+export interface ProxySettings {
+  password: string;
+}
+
 // Simply runs pm2 stop proxy
 export function turnOff(): void {
   console.log("test");

@@ -1,6 +1,14 @@
 import { Application, Router, helpers } from "https://deno.land/x/oak/mod.ts";
 import * as proxy from "./dashboard/proxy.ts";
 
+interface Settings {
+  proxy: proxy.ProxySettings;
+}
+
+const settings: Settings = JSON.parse(Deno.readTextFileSync("./settings.json"));
+
+console.log(settings);
+
 const port = 6000;
 const app = new Application();
 

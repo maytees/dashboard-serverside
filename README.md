@@ -9,10 +9,8 @@ Here is an example of settings.json:
 
 ```json
 {
-  "services": [
-    {
-      "password": "coolpassword1"
-    }
-  ]
+  "proxy": {
+    "password": "marketsidelemonade"
+  }
 }
 ```
