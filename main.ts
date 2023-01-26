@@ -1,37 +1,49 @@
 import { Application, Router, helpers } from "https://deno.land/x/oak/mod.ts";
 import * as proxy from "./dashboard/proxy.ts";
+import { sha256 } from "https://denopkg.com/chiefbiiko/sha256@v1.0.0/mod.ts";
+import { oakCors } from "https://deno.land/x/cors/mod.ts";
 
 interface Settings {
   proxy: proxy.ProxySettings;
 }
 
-const settings: Settings = JSON.parse(Deno.readTextFileSync("./settings.json"));
-
-console.log(settings);
-
-const port = 6000;
+const port = 6443;
 const app = new Application();
 
 const router = new Router();
 
+function getSettings(): Settings {
+  return JSON.parse(Deno.readTextFileSync("./settings.json"));
+}
+
 router.post("/proxy/on", (ctx) => {
-  ctx.response.body = "Turning on proxy";
   proxy.turnOn();
+  ctx.response.body = "Turned on proxy";
 });
 
 router.post("/proxy/off", (ctx) => {
-  ctx.response.body = "Turning off the proxy";
   proxy.turnOff();
+  ctx.response.body = "Turned off the proxy";
 });
 
 router.get("/proxy/password", (ctx) => {
-  ctx.response.body = "The password is: lol";
+  ctx.response.body = sha256(getSettings().proxy.password, "utf8", "hex");
 });
 
 router.post("/proxy/password", (ctx) => {
   const { newPass } = helpers.getQuery(ctx, { mergeParams: true });
-  ctx.response.body = "Changing password to: " + newPass;
+  const newSettings = { ...getSettings(), proxy: { password: newPass } };
+
+  Deno.writeTextFileSync("./settings.json", JSON.stringify(newSettings));
+
+  ctx.response.body = "Changed password to: " + newPass;
 });
+
+app.use(
+  oakCors({
+    origin: "*",
+  })
+);
 
 app.use(router.allowedMethods());
 app.use(router.routes());

@@ -33,6 +33,3 @@ export function turnOn(): void {
   p.status();
   p.close();
 }
-
-// Hashes param and sets it in conf file
-export async function setPassword(password: string): Promise<void> {}
