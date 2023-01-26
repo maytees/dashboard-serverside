@@ -9,7 +9,7 @@ export function turnOff(): void {
     cmd: ["pm2", "stop", "proxy"],
   });
 
-  console.log("Turning off");
+  console.log("Turning off proxy");
   p.status();
   p.close();
 }
@@ -29,7 +29,7 @@ export function turnOn(): void {
     ],
   });
 
-  console.log("Turning on");
+  console.log("Turning on proxy");
   p.status();
   p.close();
 }
