@@ -1,12 +1,19 @@
 import { Application, Router } from "https://deno.land/x/oak/mod.ts";
+import * as proxy from "./dashboard/proxy.ts";
 
 const port = 6000;
 const app = new Application();
 
 const router = new Router();
 
-router.post("/proxy", (ctx) => {
-  ctx.response.body = "Received a POST HTTP method";
+router.post("/proxy/on", (ctx) => {
+  ctx.response.body = "Turning on proxy";
+  proxy.turnOn();
+});
+
+router.post("/proxy/off", (ctx) => {
+  ctx.response.body = "Turning off the proxy";
+  proxy.turnOff();
 });
 
 app.use(router.allowedMethods());

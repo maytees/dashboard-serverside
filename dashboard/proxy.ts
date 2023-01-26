@@ -1,7 +1,9 @@
 // Simply runs pm2 stop proxy
 export function turnOff(): void {
   console.log("test");
-  let p = Deno.run({ cmd: ["/usr/local/bin/pm2", "stop", "proxy"] });
+  let p = Deno.run({
+    cmd: ["pm2", "stop", "proxy"],
+  });
 
   console.log("Turning off");
   p.status();
@@ -11,11 +13,15 @@ export function turnOff(): void {
 export function turnOn(): void {
   let p = Deno.run({
     cmd: [
-      "/usr/local/bin/pm2",
+      "pm2",
       "start",
-      "/home/mateesuser/workspace/uv-pwoxy/index.mjs",
+      "npm",
       "--name",
       "proxy",
+      "--",
+      "--prefix",
+      "/home/matees/workspace/uv-pwoxy",
+      "start",
     ],
   });
 
