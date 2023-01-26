@@ -16,6 +16,16 @@ export function turnOff(): void {
 
 export function turnOn(): void {
   let p = Deno.run({
+    cmd: ["pm2", "start", "proxy"],
+  });
+
+  console.log("Turning on proxy");
+  p.status();
+  p.close();
+}
+
+export function turnOnNew(): void {
+  let p = Deno.run({
     cmd: [
       "pm2",
       "start",
@@ -29,7 +39,7 @@ export function turnOn(): void {
     ],
   });
 
-  console.log("Turning on proxy");
+  console.log("Creating new instance of proxy");
   p.status();
   p.close();
 }
