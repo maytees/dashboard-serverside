@@ -1,4 +1,4 @@
-import { Application, Router } from "https://deno.land/x/oak/mod.ts";
+import { Application, Router, helpers } from "https://deno.land/x/oak/mod.ts";
 import * as proxy from "./dashboard/proxy.ts";
 
 const port = 6000;
@@ -14,6 +14,15 @@ router.post("/proxy/on", (ctx) => {
 router.post("/proxy/off", (ctx) => {
   ctx.response.body = "Turning off the proxy";
   proxy.turnOff();
+});
+
+router.get("/proxy/password", (ctx) => {
+  ctx.response.body = "The password is: lol";
+});
+
+router.post("/proxy/password", (ctx) => {
+  const { newPass } = helpers.getQuery(ctx, { mergeParams: true });
+  ctx.response.body = "Changing password to: " + newPass;
 });
 
 app.use(router.allowedMethods());
