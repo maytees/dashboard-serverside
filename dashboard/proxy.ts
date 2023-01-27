@@ -5,7 +5,7 @@ export interface ProxySettings {
 // Simply runs pm2 stop proxy
 export function turnOff(): void {
   console.log("test");
-  let p = Deno.run({
+  const p = Deno.run({
     cmd: ["pm2", "stop", "proxy"],
   });
 
@@ -15,7 +15,7 @@ export function turnOff(): void {
 }
 
 export function turnOn(): void {
-  let p = Deno.run({
+  const p = Deno.run({
     cmd: ["pm2", "start", "proxy"],
   });
 
@@ -25,7 +25,7 @@ export function turnOn(): void {
 }
 
 export function turnOnNew(): void {
-  let p = Deno.run({
+  const p = Deno.run({
     cmd: [
       "pm2",
       "start",

@@ -1,7 +1,11 @@
-import { Application, Router, helpers } from "https://deno.land/x/oak/mod.ts";
+import {
+  Application,
+  helpers,
+  Router,
+} from "https://deno.land/x/oak@v11.1.0/mod.ts";
 import * as proxy from "./dashboard/proxy.ts";
 import { sha256 } from "https://denopkg.com/chiefbiiko/sha256@v1.0.0/mod.ts";
-import { oakCors } from "https://deno.land/x/cors/mod.ts";
+import { oakCors } from "https://deno.land/x/cors@v1.2.2/mod.ts";
 
 interface Settings {
   proxy: proxy.ProxySettings;
@@ -32,8 +36,8 @@ router.get("/proxy/password", (ctx) => {
 
 router.post("/proxy/password", (ctx) => {
   const { newPass } = helpers.getQuery(ctx, { mergeParams: true });
-  const newSettings = { ...getSettings(), proxy: { password: newPass } };
 
+  const newSettings = { ...getSettings(), proxy: { password: newPass } };
   Deno.writeTextFileSync("./settings.json", JSON.stringify(newSettings));
 
   ctx.response.body = "Changed password to: " + newPass;
